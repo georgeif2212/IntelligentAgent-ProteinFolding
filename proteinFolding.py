@@ -6,9 +6,11 @@ pyDatalog.clear()
 # ? Chain A (21 amino acids): GIVEQCCTSICSLYQLENYCN
 # ? Chain B (30 amino acids): FVNQHLCGSHLVEALYLVCGERGFFYTPKT
 
+
 # Function to compute sequence length
 def get_length(seq):
     return len(seq)
+
 
 # Define terms
 pyDatalog.create_terms(
@@ -39,12 +41,14 @@ valid_amino_acid = set("GAVLIFPWCYSTNQDEKRHM")
 valid_sequence(X) <= (seq_length(X, Y) & have(X, Y) & amino_acid_sequence(X, Seq))
 
 # Test valid sequences with explicit bool() conversion
-print("\n✅ ¿La cadena A es válida?:", bool(valid_sequence("A")))
-print("✅ ¿La cadena B es válida?:", bool(valid_sequence("B")))
+print("\n¿La cadena A es válida?:", bool(valid_sequence("A")))
+print("¿La cadena B es válida?:", bool(valid_sequence("B")))
 
 # Test invalid sequences
-print("\n❌ ¿Una secuencia A mutada es válida?:", bool(valid_sequence("A_test")))
-print("❌ ¿Una cadena B con longitud incorrecta es válida?:", bool(valid_sequence("B_test")))
+print("\n¿Una secuencia A mutada es válida?:", bool(valid_sequence("A_test")))
+print(
+    "¿Una cadena B con longitud incorrecta es válida?:", bool(valid_sequence("B_test"))
+)
 
 
 # Queries
