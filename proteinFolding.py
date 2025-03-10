@@ -12,6 +12,11 @@ def get_length(seq):
     return len(seq)
 
 
+# Verify if all characters in a sequence are valid amino acids
+def is_valid_sequence(seq):
+    return all(aa in valid_amino_acid for aa in seq)
+
+
 # Define terms
 pyDatalog.create_terms(
     "X, Y, Seq, chain, have, amino_acid_sequence, seq_length, valid_amino_acid, valid_sequence"
@@ -38,16 +43,23 @@ valid_amino_acid = set("GAVLIFPWCYSTNQDEKRHM")
 +seq_length("B", get_length("FVNQHLCGSHLVEALYLVCGERGFFYTPKT"))
 
 # * Rule: Verify if the sequence length matches the expected length
-valid_sequence(X) <= (seq_length(X, Y) & have(X, Y) & amino_acid_sequence(X, Seq))
+valid_sequence(X, Seq) <= (seq_length(X, Y) & have(X, Y) & amino_acid_sequence(X, Seq))
 
-# Test valid sequences with explicit bool() conversion
-print("\n¿La cadena A es válida?:", bool(valid_sequence("A")))
-print("¿La cadena B es válida?:", bool(valid_sequence("B")))
+# Test valid sequences
+print("\n ¿La cadena A es válida?:", bool(valid_sequence("A", "GIVEQCCTSICSLYQLENYCN")))
+print(
+    "¿La cadena B es válida?:",
+    bool(valid_sequence("B", "FVNQHLCGSHLVEALYLVCGERGFFYTPKT")),
+)
 
 # Test invalid sequences
-print("\n¿Una secuencia A mutada es válida?:", bool(valid_sequence("A_test")))
 print(
-    "¿Una cadena B con longitud incorrecta es válida?:", bool(valid_sequence("B_test"))
+    "\n¿Una secuencia A mutada (error en aminoácido) es válida?:",
+    bool(valid_sequence("A", "GIVEQCCTSICSLYQLENYCX")),
+)
+print(
+    "\n¿Una cadena B con longitud incorrecta es válida?:",
+    bool(valid_sequence("B", "FVNQHLCGSHLVEALYLVCGERGFFYTPKTT")),
 )
 
 
