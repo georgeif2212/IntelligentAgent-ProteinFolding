@@ -12,11 +12,6 @@ def get_length(seq):
     return len(seq)
 
 
-# Verify if all characters in a sequence are valid amino acids
-def is_valid_sequence(seq):
-    return all(aa in valid_amino_acid for aa in seq)
-
-
 # Define terms
 pyDatalog.create_terms(
     "X, Y, Seq, chain, have, amino_acid_sequence, seq_length, valid_amino_acid, valid_sequence"
