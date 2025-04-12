@@ -40,11 +40,6 @@ for col in categorical_cols:
     data[col] = le.fit_transform(data[col])
     label_encoders[col] = le
 
-# Codificar la variable objetivo y guardarla en el diccionario
-le_target = LabelEncoder()
-data['NObeyesdad'] = le_target.fit_transform(data['NObeyesdad'])
-label_encoders['NObeyesdad'] = le_target
-
 
 # * Separate X values from Y
 X = data.drop(columns='NObeyesdad')
@@ -71,15 +66,3 @@ print("\nReporte de clasificación:")
 target_names = label_encoders['NObeyesdad'].classes_
 print(classification_report(y_test, y_pred, target_names=target_names))
 
-# # Graficar con matplotlib
-# plt.figure(figsize=(8, 6))
-# scatter = plt.scatter(X_train['Gender'], X_train['Age'], c=y_train, cmap='tab10', edgecolors='k')
-# plt.xlabel('Gender')
-# plt.ylabel('Age')
-# plt.title('Visualización simple de los datos de entrenamiento')
-
-# # Añadir leyenda
-# plt.legend(handles=scatter.legend_elements()[0], labels=le_target.classes_, title="Clase")
-
-# plt.grid(True)
-# plt.show()
