@@ -36,3 +36,27 @@ for col in categorical_cols:
     data[col] = le.fit_transform(data[col])
     label_encoders[col] = le
 
+# * Separate X values from Y
+X = data.drop(columns='NObeyesdad')
+y = data['NObeyesdad']
+
+# * Separate into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42, stratify=y
+)
+
+# * Training multiclass logistic regression model
+log_model = LogisticRegression(multi_class='multinomial', solver='lbfgs', max_iter=1000)
+log_model.fit(X_train, y_train)
+
+# * Predict test set
+y_pred = log_model.predict(X_test)
+
+# # * Evaluación
+print("\nAccuracy:", accuracy_score(y_test, y_pred))
+print("\nMatriz de confusión:")
+print(confusion_matrix(y_test, y_pred))
+
+print("\nReporte de clasificación:")
+target_names = label_encoders['NObeyesdad'].classes_
+print(classification_report(y_test, y_pred, target_names=target_names))
